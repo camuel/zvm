@@ -3,12 +3,19 @@
 #include <unistd.h>
 #include "common/logger.h"
 struct zvm_state {
-	int debug_mode_bypass_acl_checks = 0;
-	int debug_mode_ignore_validator = 0;
-	int debug_mode_bypass_platform_qualification = 0;
-	int log_verbosity = 0;
-	char *manifest_filename = NULL;
+	int debug_mode_bypass_acl_checks;
+	int debug_mode_ignore_validator;
+	int debug_mode_bypass_platform_qualification;
+	int log_verbosity;
+	char *manifest_filename;
 };
+void zvm_state_init(struct zvm_state* st) {
+	st->debug_mode_bypass_acl_checks = 0;
+	st->debug_mode_ignore_validator = 0;
+	st->debug_mode_bypass_platform_qualification = 0;
+	st->log_verbosity = 0;
+	st->manifest_filename = NULL;
+}
 static void print_usage() {
   fprintf(stderr,
           "Usage: zvm [-h] [-v<number>] [-a] [-l] [-v] [-q] -M<filename>\n"
