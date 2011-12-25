@@ -55,6 +55,7 @@
 								<option id="gnu.c.link.option.libs.1717188746" name="Libraries (-l)" superClass="gnu.c.link.option.libs" valueType="libs">
 									<listOptionValue builtIn="false" value="nacl_fault_inject"/>
 									<listOptionValue builtIn="false" value="pthread"/>
+									<listOptionValue builtIn="false" value="nacl_sel"/>
 									<listOptionValue builtIn="false" value="nacl_platform"/>
 									<listOptionValue builtIn="false" value="nacl_platform_qualify"/>
 									<listOptionValue builtIn="false" value="nacl_validate_x86_64"/>
@@ -124,7 +125,6 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="src/host"/>
 						<entry excluding="host" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="src"/>
 					</sourceEntries>
 				</configuration>

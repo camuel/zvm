@@ -16,7 +16,7 @@ CXXFLAGS2=-Wl,-z,noexecstack -m64 -Wno-variadic-macros -L/usr/lib64 -pie -Wl,-z,
 
 all: libnacl tests
 
-libnacl: obj/libnacl_fault_inject.a obj/libnacl_platform_qualify.a obj/libnacl_validate_x86_64.a obj/libnacl_validate_reg_sfi_x86_64.a obj/libnacl_copy_x86_64.a obj/libnacl_decoder_x86_64.a obj/libnacl_opcode_modeling_x86_64.a obj/libnacl_validate_base_x86_64.a obj/libnacl_platform.a obj/libnacl_gio.a
+libnacl: lib/libnacl_sel.a lib/libnacl_fault_inject.a lib/libnacl_platform_qualify.a lib/libnacl_validate_x86_64.a lib/libnacl_validate_reg_sfi_x86_64.a lib/libnacl_copy_x86_64.a lib/libnacl_decoder_x86_64.a lib/libnacl_opcode_modeling_x86_64.a lib/libnacl_validate_base_x86_64.a lib/libnacl_platform.a lib/libnacl_gio.a
 
 tests: test_compile
 	test/x86_validator_tests_nc_remaining_memory
@@ -29,25 +29,25 @@ test_compile: test/x86_validator_tests_halt_trim test/x86_decoder_tests_nc_inst_
 obj/halt_trim_tests.o: src/validator/x86/halt_trim_tests.cc
 	g++ ${CXXFLAGS} -o obj/halt_trim_tests.o ${CXXFLAGS1} -Igtest/include src/validator/x86/halt_trim_tests.cc
 
-test/x86_validator_tests_halt_trim: obj/halt_trim_tests.o obj/libnacl_validate_x86_64.a obj/libnacl_validate_reg_sfi_x86_64.a obj/libnacl_copy_x86_64.a obj/libnacl_decoder_x86_64.a obj/libnacl_opcode_modeling_x86_64.a obj/libnacl_validate_base_x86_64.a obj/libnacl_platform.a obj/libnacl_gio.a
+test/x86_validator_tests_halt_trim: obj/halt_trim_tests.o lib/libnacl_validate_x86_64.a lib/libnacl_validate_reg_sfi_x86_64.a lib/libnacl_copy_x86_64.a lib/libnacl_decoder_x86_64.a lib/libnacl_opcode_modeling_x86_64.a lib/libnacl_validate_base_x86_64.a lib/libnacl_platform.a lib/libnacl_gio.a
 	g++ ${CXXFLAGS} -o test/x86_validator_tests_halt_trim ${CXXFLAGS2} obj/halt_trim_tests.o -L/usr/lib -Llib -Lgtest -lgtest -lnacl_validate_base_x86_64 -lnacl_validate_x86_64 -lnacl_validate_reg_sfi_x86_64 -lnacl_copy_x86_64 -lnacl_decoder_x86_64 -lnacl_opcode_modeling_x86_64 -lnacl_platform -lnacl_gio -lrt -lpthread -lcrypto
 
 obj/nc_inst_state_tests.o: src/validator/x86/decoder/nc_inst_state_tests.cc
 	g++ ${CXXFLAGS} -o obj/nc_inst_state_tests.o ${CXXFLAGS1} -Igtest/include src/validator/x86/decoder/nc_inst_state_tests.cc
 
-test/x86_decoder_tests_nc_inst_state: obj/nc_inst_state_tests.o obj/ncval_decode_tables.o obj/libnacl_copy_x86_64.a obj/libnacl_decoder_x86_64.a obj/libnacl_opcode_modeling_x86_64.a obj/libnacl_validate_base_x86_64.a obj/libnacl_platform.a obj/libnacl_gio.a
+test/x86_decoder_tests_nc_inst_state: obj/nc_inst_state_tests.o lib/libnacl_validate_x86_64.a lib/libnacl_validate_reg_sfi_x86_64.a lib/libnacl_copy_x86_64.a lib/libnacl_decoder_x86_64.a lib/libnacl_opcode_modeling_x86_64.a lib/libnacl_validate_base_x86_64.a lib/libnacl_platform.a lib/libnacl_gio.a
 	g++ ${CXXFLAGS} -o test/x86_decoder_tests_nc_inst_state ${CXXFLAGS2} obj/nc_inst_state_tests.o -L/usr/lib -Llib -Lgtest -lgtest -lnacl_validate_base_x86_64 -lnacl_validate_x86_64 -lnacl_validate_reg_sfi_x86_64 -lnacl_copy_x86_64 -lnacl_decoder_x86_64 -lnacl_opcode_modeling_x86_64 -lnacl_platform -lnacl_gio -lrt -lpthread -lcrypto
 
 obj/nc_inst_bytes_tests.o: src/validator/x86/nc_inst_bytes_tests.cc
 	g++ ${CXXFLAGS} -o obj/nc_inst_bytes_tests.o ${CXXFLAGS1} -Igtest/include src/validator/x86/nc_inst_bytes_tests.cc
 
-test/x86_validator_tests_nc_inst_bytes: obj/nc_inst_bytes_tests.o obj/libnacl_validate_x86_64.a obj/libnacl_validate_reg_sfi_x86_64.a obj/libnacl_copy_x86_64.a obj/libnacl_decoder_x86_64.a obj/libnacl_opcode_modeling_x86_64.a obj/libnacl_validate_base_x86_64.a obj/libnacl_platform.a obj/libnacl_gio.a
+test/x86_validator_tests_nc_inst_bytes: obj/nc_inst_bytes_tests.o lib/libnacl_validate_x86_64.a lib/libnacl_validate_reg_sfi_x86_64.a lib/libnacl_copy_x86_64.a lib/libnacl_decoder_x86_64.a lib/libnacl_opcode_modeling_x86_64.a lib/libnacl_validate_base_x86_64.a lib/libnacl_platform.a lib/libnacl_gio.a
 	g++ ${CXXFLAGS} -o test/x86_validator_tests_nc_inst_bytes ${CXXFLAGS2} obj/nc_inst_bytes_tests.o -L/usr/lib -Llib -Lgtest -lgtest -lnacl_validate_base_x86_64 -lnacl_validate_x86_64 -lnacl_validate_reg_sfi_x86_64 -lnacl_copy_x86_64 -lnacl_decoder_x86_64 -lnacl_opcode_modeling_x86_64 -lnacl_platform -lnacl_gio -lrt -lpthread -lcrypto
 
 obj/nc_remaining_memory_tests.o: src/validator/x86/nc_remaining_memory_tests.cc
 	g++ ${CXXFLAGS} -o obj/nc_remaining_memory_tests.o ${CXXFLAGS1} -Igtest/include src/validator/x86/nc_remaining_memory_tests.cc
 
-test/x86_validator_tests_nc_remaining_memory: obj/nc_remaining_memory_tests.o obj/libnacl_validate_x86_64.a obj/libnacl_validate_reg_sfi_x86_64.a obj/libnacl_copy_x86_64.a obj/libnacl_decoder_x86_64.a obj/libnacl_opcode_modeling_x86_64.a obj/libnacl_validate_base_x86_64.a obj/libnacl_platform.a obj/libnacl_gio.a
+test/x86_validator_tests_nc_remaining_memory: obj/nc_remaining_memory_tests.o lib/libnacl_validate_x86_64.a lib/libnacl_validate_reg_sfi_x86_64.a lib/libnacl_copy_x86_64.a lib/libnacl_decoder_x86_64.a lib/libnacl_opcode_modeling_x86_64.a lib/libnacl_validate_base_x86_64.a lib/libnacl_platform.a lib/libnacl_gio.a
 	g++ ${CXXFLAGS} -o test/x86_validator_tests_nc_remaining_memory ${CXXFLAGS2} obj/nc_remaining_memory_tests.o -L/usr/lib -Llib -Lgtest -lgtest -lnacl_validate_base_x86_64 -lnacl_validate_x86_64 -lnacl_validate_reg_sfi_x86_64 -lnacl_copy_x86_64 -lnacl_decoder_x86_64 -lnacl_opcode_modeling_x86_64 -lnacl_platform -lnacl_gio -lrt -lpthread -lcrypto
 
 clean: clean_intermediate
@@ -60,34 +60,37 @@ clean_intermediate:
 	rm test/*
 	echo test files have been deleted
 
-obj/libnacl_fault_inject.a: obj/fault_injection.o
+lib/libnacl_sel.a: obj/dyn_array.o obj/elf_util.o obj/nacl_all_modules.o obj/nacl_app_thread.o obj/nacl_desc_effector_ldr.o obj/nacl_globals.o obj/nacl_memory_object.o obj/nacl_signal_common.o obj/nacl_stack_safety.o obj/nacl_text.o obj/sel_addrspace.o obj/sel_ldr.o obj/sel_ldr-inl.o obj/sel_ldr_thread_interface.o obj/sel_mem.o obj/sel_qualify.o obj/sel_util-inl.o obj/sel_validate_image.o obj/nacl_ldt_x86.o obj/nacl_switch_64.o obj/nacl_switch_to_app_64.o obj/nacl_syscall_64.o obj/nacl_tls_64.o obj/sel_addrspace_x86_64.o obj/sel_ldr_x86_64.o obj/sel_rt_64.o obj/tramp_64.o obj/sel_addrspace_posix_x86_64.o obj/sel_memory.o obj/nacl_thread_nice.o obj/nacl_ldt.o obj/sel_segments.o obj/nacl_signal.o obj/nacl_signal_64.o
+	@ar rc lib/libnacl_sel.a obj/dyn_array.o obj/elf_util.o obj/nacl_all_modules.o obj/nacl_app_thread.o obj/nacl_desc_effector_ldr.o obj/nacl_globals.o obj/nacl_memory_object.o obj/nacl_signal_common.o obj/nacl_stack_safety.o obj/nacl_text.o obj/sel_addrspace.o obj/sel_ldr.o obj/sel_ldr-inl.o obj/sel_ldr_thread_interface.o obj/sel_mem.o obj/sel_qualify.o obj/sel_util-inl.o obj/sel_validate_image.o obj/nacl_ldt_x86.o obj/nacl_switch_64.o obj/nacl_switch_to_app_64.o obj/nacl_syscall_64.o obj/nacl_tls_64.o obj/sel_addrspace_x86_64.o obj/sel_ldr_x86_64.o obj/sel_rt_64.o obj/tramp_64.o obj/sel_addrspace_posix_x86_64.o obj/sel_memory.o obj/nacl_thread_nice.o obj/nacl_ldt.o obj/sel_segments.o obj/nacl_signal.o obj/nacl_signal_64.o
+
+lib/libnacl_fault_inject.a: obj/fault_injection.o
 	ar rc lib/libnacl_fault_inject.a obj/fault_injection.o
 
-obj/libnacl_platform.a: obj/nacl_exit.o obj/nacl_find_addrsp.o obj/nacl_host_desc.o obj/nacl_host_dir.o obj/nacl_secure_random.o obj/nacl_semaphore.o obj/nacl_thread_id.o obj/nacl_threads.o obj/nacl_time.o obj/nacl_timestamp.o obj/condition_variable.o obj/lock.o obj/nacl_check.o obj/nacl_global_secure_random.o obj/nacl_host_desc_common.o obj/nacl_interruptible_condvar.o obj/nacl_interruptible_mutex.o obj/nacl_log.o obj/nacl_secure_random_common.o obj/nacl_sync_checked.o obj/nacl_time_common.o obj/platform_init.o obj/refcount_base.o
+lib/libnacl_platform.a: obj/nacl_exit.o obj/nacl_find_addrsp.o obj/nacl_host_desc.o obj/nacl_host_dir.o obj/nacl_secure_random.o obj/nacl_semaphore.o obj/nacl_thread_id.o obj/nacl_threads.o obj/nacl_time.o obj/nacl_timestamp.o obj/condition_variable.o obj/lock.o obj/nacl_check.o obj/nacl_global_secure_random.o obj/nacl_host_desc_common.o obj/nacl_interruptible_condvar.o obj/nacl_interruptible_mutex.o obj/nacl_log.o obj/nacl_secure_random_common.o obj/nacl_sync_checked.o obj/nacl_time_common.o obj/platform_init.o obj/refcount_base.o
 	ar rc lib/libnacl_platform.a obj/nacl_exit.o obj/nacl_find_addrsp.o obj/nacl_host_desc.o obj/nacl_host_dir.o obj/nacl_secure_random.o obj/nacl_semaphore.o obj/nacl_thread_id.o obj/nacl_threads.o obj/nacl_time.o obj/nacl_timestamp.o obj/condition_variable.o obj/lock.o obj/nacl_check.o obj/nacl_global_secure_random.o obj/nacl_host_desc_common.o obj/nacl_interruptible_condvar.o obj/nacl_interruptible_mutex.o obj/nacl_log.o obj/nacl_secure_random_common.o obj/nacl_sync_checked.o obj/nacl_time_common.o obj/platform_init.o obj/refcount_base.o
 
-obj/libnacl_platform_qualify.a: obj/nacl_os_qualify.o obj/sysv_shm_and_mmap.o obj/nacl_dep_qualify.o obj/nacl_cpuwhitelist.o obj/nacl_dep_qualify_arch.o
+lib/libnacl_platform_qualify.a: obj/nacl_os_qualify.o obj/sysv_shm_and_mmap.o obj/nacl_dep_qualify.o obj/nacl_cpuwhitelist.o obj/nacl_dep_qualify_arch.o
 	ar rc lib/libnacl_platform_qualify.a obj/nacl_os_qualify.o obj/sysv_shm_and_mmap.o obj/nacl_dep_qualify.o obj/nacl_cpuwhitelist.o obj/nacl_dep_qualify_arch.o
 
-obj/libnacl_validate_x86_64.a: obj/ncvalidate.o
+lib/libnacl_validate_x86_64.a: obj/ncvalidate.o
 	ar rc lib/libnacl_validate_x86_64.a obj/ncvalidate.o
 
-obj/libnacl_validate_reg_sfi_x86_64.a: obj/ncvalidate_iter.o obj/ncvalidate_iter_detailed.o obj/ncvalidator_registry.o obj/ncvalidator_registry_detailed.o obj/nc_cpu_checks.o obj/nc_illegal.o obj/nc_jumps.o obj/address_sets.o obj/nc_jumps_detailed.o obj/nc_opcode_histogram.o obj/nc_protect_base.o obj/nc_memory_protect.o obj/ncvalidate_utils.o obj/ncval_decode_tables.o
+lib/libnacl_validate_reg_sfi_x86_64.a: obj/ncvalidate_iter.o obj/ncvalidate_iter_detailed.o obj/ncvalidator_registry.o obj/ncvalidator_registry_detailed.o obj/nc_cpu_checks.o obj/nc_illegal.o obj/nc_jumps.o obj/address_sets.o obj/nc_jumps_detailed.o obj/nc_opcode_histogram.o obj/nc_protect_base.o obj/nc_memory_protect.o obj/ncvalidate_utils.o obj/ncval_decode_tables.o
 	ar rc lib/libnacl_validate_reg_sfi_x86_64.a obj/ncvalidate_iter.o obj/ncvalidate_iter_detailed.o obj/ncvalidator_registry.o obj/ncvalidator_registry_detailed.o obj/nc_cpu_checks.o obj/nc_illegal.o obj/nc_jumps.o obj/address_sets.o obj/nc_jumps_detailed.o obj/nc_opcode_histogram.o obj/nc_protect_base.o obj/nc_memory_protect.o obj/ncvalidate_utils.o obj/ncval_decode_tables.o
 
-obj/libnacl_copy_x86_64.a: obj/nccopycode.o obj/nccopycode_stores.o
+lib/libnacl_copy_x86_64.a: obj/nccopycode.o obj/nccopycode_stores.o
 	ar rc lib/libnacl_copy_x86_64.a obj/nccopycode.o obj/nccopycode_stores.o
 
-obj/libnacl_decoder_x86_64.a: obj/nc_inst_iter.o obj/nc_inst_state.o obj/nc_inst_trans.o obj/ncop_exps.o
+lib/libnacl_decoder_x86_64.a: obj/nc_inst_iter.o obj/nc_inst_state.o obj/nc_inst_trans.o obj/ncop_exps.o
 	ar rc lib/libnacl_decoder_x86_64.a obj/nc_inst_iter.o obj/nc_inst_state.o obj/nc_inst_trans.o obj/ncop_exps.o
 
-obj/libnacl_opcode_modeling_x86_64.a: obj/ncopcode_desc.o
+lib/libnacl_opcode_modeling_x86_64.a: obj/ncopcode_desc.o
 	ar rc lib/libnacl_opcode_modeling_x86_64.a obj/ncopcode_desc.o
 
-obj/libnacl_validate_base_x86_64.a: obj/error_reporter.o obj/halt_trim.o obj/nacl_cpuid.o obj/nacl_xgetbv.o obj/ncinstbuffer.o obj/x86_insts.o obj/nc_segment.o
+lib/libnacl_validate_base_x86_64.a: obj/error_reporter.o obj/halt_trim.o obj/nacl_cpuid.o obj/nacl_xgetbv.o obj/ncinstbuffer.o obj/x86_insts.o obj/nc_segment.o
 	ar rc lib/libnacl_validate_base_x86_64.a obj/error_reporter.o obj/halt_trim.o obj/nacl_cpuid.o obj/nacl_xgetbv.o obj/ncinstbuffer.o obj/x86_insts.o obj/nc_segment.o
 
-obj/libnacl_gio.a: obj/gio.o obj/gio_mem.o obj/gprintf.o obj/gio_mem_snapshot.o
+lib/libnacl_gio.a: obj/gio.o obj/gio_mem.o obj/gprintf.o obj/gio_mem_snapshot.o
 	ar rc lib/libnacl_gio.a obj/gio.o obj/gio_mem.o obj/gprintf.o obj/gio_mem_snapshot.o
 
 
@@ -101,7 +104,6 @@ obj/nccopycode_stores.o: src/validator_x86/nccopycode_stores.S
 
 obj/nacl_xgetbv.o: src/validator/x86/nacl_xgetbv.S
 	gcc ${CCFLAGS} -o obj/nacl_xgetbv.o ${CCFLAGS0} ${CCFLAGS2} src/validator/x86/nacl_xgetbv.S
-
 
 obj/gio_shm.o: src/gio/gio_shm.c
 	gcc ${CCFLAGS} -o obj/gio_shm.o ${CCFLAGS0} ${CCFLAGS1} src/gio/gio_shm.c
@@ -289,3 +291,119 @@ obj/gio_mem_snapshot.o: src/gio/gio_mem_snapshot.c
 obj/refcount_base.o: src/platform/refcount_base.cc
 	g++ ${CXXFLAGS} -o obj/refcount_base.o ${CXXFLAGS1} ${CCFLAGS2} ${CCFLAGS4} src/platform/refcount_base.cc
 
+obj/dyn_array.o: src/service_runtime/dyn_array.c
+	@gcc ${CCFLAGS} -o obj/dyn_array.o ${CCFLAGS0} ${CCFLAGS1} src/service_runtime/dyn_array.c
+
+obj/elf_util.o: src/service_runtime/elf_util.c
+	@gcc ${CCFLAGS} -o obj/elf_util.o ${CCFLAGS0} ${CCFLAGS1} src/service_runtime/elf_util.c
+
+obj/nacl_all_modules.o: src/service_runtime/nacl_all_modules.c
+	@gcc ${CCFLAGS} -o obj/nacl_all_modules.o ${CCFLAGS0} ${CCFLAGS1} src/service_runtime/nacl_all_modules.c
+
+obj/nacl_app_thread.o: src/service_runtime/nacl_app_thread.c
+	@gcc ${CCFLAGS} -o obj/nacl_app_thread.o ${CCFLAGS0} ${CCFLAGS1} src/service_runtime/nacl_app_thread.c
+
+obj/nacl_desc_effector_ldr.o: src/service_runtime/nacl_desc_effector_ldr.c
+	@gcc ${CCFLAGS} -o obj/nacl_desc_effector_ldr.o ${CCFLAGS0} ${CCFLAGS1} src/service_runtime/nacl_desc_effector_ldr.c
+
+obj/nacl_globals.o: src/service_runtime/nacl_globals.c
+	@gcc ${CCFLAGS} -o obj/nacl_globals.o ${CCFLAGS0} ${CCFLAGS1} src/service_runtime/nacl_globals.c
+
+obj/nacl_memory_object.o: src/service_runtime/nacl_memory_object.c
+	@gcc ${CCFLAGS} -o obj/nacl_memory_object.o ${CCFLAGS0} ${CCFLAGS1} src/service_runtime/nacl_memory_object.c
+
+obj/nacl_signal_common.o: src/service_runtime/nacl_signal_common.c
+	@gcc ${CCFLAGS} -o obj/nacl_signal_common.o ${CCFLAGS0} ${CCFLAGS1} src/service_runtime/nacl_signal_common.c
+
+obj/nacl_stack_safety.o: src/service_runtime/nacl_stack_safety.c
+	@gcc ${CCFLAGS} -o obj/nacl_stack_safety.o ${CCFLAGS0} ${CCFLAGS1} src/service_runtime/nacl_stack_safety.c
+
+obj/nacl_syscall_common.o: src/service_runtime/nacl_syscall_common.c
+	@gcc ${CCFLAGS} -o obj/nacl_syscall_common.o ${CCFLAGS0} ${CCFLAGS1} src/service_runtime/nacl_syscall_common.c
+
+obj/nacl_syscall_hook.o: src/service_runtime/nacl_syscall_hook.c
+	@gcc ${CCFLAGS} -o obj/nacl_syscall_hook.o ${CCFLAGS0} ${CCFLAGS1} src/service_runtime/nacl_syscall_hook.c
+
+obj/nacl_text.o: src/service_runtime/nacl_text.c
+	@gcc ${CCFLAGS} -o obj/nacl_text.o ${CCFLAGS0} ${CCFLAGS1} src/service_runtime/nacl_text.c
+
+obj/sel_addrspace.o: src/service_runtime/sel_addrspace.c
+	@gcc ${CCFLAGS} -o obj/sel_addrspace.o ${CCFLAGS0} ${CCFLAGS1} src/service_runtime/sel_addrspace.c
+
+obj/sel_ldr.o: src/service_runtime/sel_ldr.c
+	@gcc ${CCFLAGS} -o obj/sel_ldr.o ${CCFLAGS0} ${CCFLAGS1} src/service_runtime/sel_ldr.c
+
+obj/sel_ldr-inl.o: src/service_runtime/sel_ldr-inl.c
+	@gcc ${CCFLAGS} -o obj/sel_ldr-inl.o ${CCFLAGS0} ${CCFLAGS1} src/service_runtime/sel_ldr-inl.c
+
+obj/sel_ldr_standard.o: src/service_runtime/sel_ldr_standard.c
+	@gcc ${CCFLAGS} -o obj/sel_ldr_standard.o ${CCFLAGS0} ${CCFLAGS1} src/service_runtime/sel_ldr_standard.c
+
+obj/sel_ldr_thread_interface.o: src/service_runtime/sel_ldr_thread_interface.c
+	@gcc ${CCFLAGS} -o obj/sel_ldr_thread_interface.o ${CCFLAGS0} ${CCFLAGS1} src/service_runtime/sel_ldr_thread_interface.c
+
+obj/sel_mem.o: src/service_runtime/sel_mem.c
+	@gcc ${CCFLAGS} -o obj/sel_mem.o ${CCFLAGS0} ${CCFLAGS1} src/service_runtime/sel_mem.c
+
+obj/sel_qualify.o: src/service_runtime/sel_qualify.c
+	@gcc ${CCFLAGS} -o obj/sel_qualify.o ${CCFLAGS0} ${CCFLAGS1} src/service_runtime/sel_qualify.c
+
+obj/sel_util-inl.o: src/service_runtime/sel_util-inl.c
+	@gcc ${CCFLAGS} -o obj/sel_util-inl.o ${CCFLAGS0} ${CCFLAGS1} src/service_runtime/sel_util-inl.c
+
+obj/sel_validate_image.o: src/service_runtime/sel_validate_image.c
+	@gcc ${CCFLAGS} -o obj/sel_validate_image.o ${CCFLAGS0} ${CCFLAGS1} src/service_runtime/sel_validate_image.c
+	
+obj/nacl_ldt_x86.o: src/service_runtime/arch/x86/nacl_ldt_x86.c
+	@gcc ${CCFLAGS} -o obj/nacl_ldt_x86.o ${CCFLAGS0} ${CCFLAGS1} src/service_runtime/arch/x86/nacl_ldt_x86.c
+
+obj/nacl_switch_to_app_64.o: src/service_runtime/arch/x86_64/nacl_switch_to_app_64.c
+	@gcc ${CCFLAGS} -o obj/nacl_switch_to_app_64.o ${CCFLAGS0} ${CCFLAGS1} src/service_runtime/arch/x86_64/nacl_switch_to_app_64.c
+
+obj/nacl_tls_64.o: src/service_runtime/arch/x86_64/nacl_tls_64.c
+	@gcc ${CCFLAGS} -o obj/nacl_tls_64.o ${CCFLAGS0} ${CCFLAGS1} src/service_runtime/arch/x86_64/nacl_tls_64.c
+
+obj/sel_addrspace_x86_64.o: src/service_runtime/arch/x86_64/sel_addrspace_x86_64.c
+	@gcc ${CCFLAGS} -o obj/sel_addrspace_x86_64.o ${CCFLAGS0} ${CCFLAGS1} src/service_runtime/arch/x86_64/sel_addrspace_x86_64.c
+
+obj/sel_ldr_x86_64.o: src/service_runtime/arch/x86_64/sel_ldr_x86_64.c
+	@gcc ${CCFLAGS} -o obj/sel_ldr_x86_64.o ${CCFLAGS0} ${CCFLAGS1} src/service_runtime/arch/x86_64/sel_ldr_x86_64.c
+
+obj/sel_rt_64.o: src/service_runtime/arch/x86_64/sel_rt_64.c
+	@gcc ${CCFLAGS} -o obj/sel_rt_64.o ${CCFLAGS0} ${CCFLAGS1} src/service_runtime/arch/x86_64/sel_rt_64.c
+
+obj/sel_addrspace_posix_x86_64.o: src/service_runtime/arch/x86_64/sel_addrspace_posix_x86_64.c
+	@gcc ${CCFLAGS} -o obj/sel_addrspace_posix_x86_64.o ${CCFLAGS0} ${CCFLAGS1} src/service_runtime/arch/x86_64/sel_addrspace_posix_x86_64.c
+
+obj/sel_memory.o: src/service_runtime/linux/sel_memory.c
+	@gcc ${CCFLAGS} -o obj/sel_memory.o ${CCFLAGS0} ${CCFLAGS1} src/service_runtime/linux/sel_memory.c
+
+obj/nacl_thread_nice.o: src/service_runtime/linux/nacl_thread_nice.c
+	@gcc ${CCFLAGS} -o obj/nacl_thread_nice.o ${CCFLAGS0} ${CCFLAGS1} src/service_runtime/linux/nacl_thread_nice.c
+
+obj/nacl_ldt.o: src/service_runtime/linux/x86/nacl_ldt.c
+	@gcc ${CCFLAGS} -o obj/nacl_ldt.o ${CCFLAGS0} ${CCFLAGS1} src/service_runtime/linux/x86/nacl_ldt.c
+
+obj/sel_segments.o: src/service_runtime/linux/x86/sel_segments.c
+	@gcc ${CCFLAGS} -o obj/sel_segments.o ${CCFLAGS0} ${CCFLAGS1} src/service_runtime/linux/x86/sel_segments.c
+
+obj/nacl_signal.o: src/service_runtime/posix/nacl_signal.c
+	@gcc ${CCFLAGS} -o obj/nacl_signal.o ${CCFLAGS0} ${CCFLAGS1} src/service_runtime/posix/nacl_signal.c
+
+obj/nacl_signal_64.o: src/service_runtime/linux/nacl_signal_64.c
+	@gcc ${CCFLAGS} -o obj/nacl_signal_64.o ${CCFLAGS0} ${CCFLAGS1} src/service_runtime/linux/nacl_signal_64.c
+
+obj/nacl_error_code.o: src/service_runtime/nacl_error_code.c
+	@gcc ${CCFLAGS} -o obj/nacl_error_code.o ${CCFLAGS0} ${CCFLAGS1} src/service_runtime/nacl_error_code.c
+
+obj/nacl_thread_interface.o: src/threading/nacl_thread_interface.c
+	@gcc ${CCFLAGS} -o obj/nacl_thread_interface.o ${CCFLAGS0} ${CCFLAGS1} src/threading/nacl_thread_interface.c
+
+obj/nacl_switch_64.o: src/service_runtime/arch/x86_64/nacl_switch_64.S
+	@gcc ${CCFLAGS} -o obj/nacl_switch_64.o ${CCFLAGS0} ${CCFLAGS2} src/service_runtime/arch/x86_64/nacl_switch_64.S
+
+obj/nacl_syscall_64.o: src/service_runtime/arch/x86_64/nacl_syscall_64.S
+	@gcc ${CCFLAGS} -o obj/nacl_syscall_64.o ${CCFLAGS0} ${CCFLAGS2} src/service_runtime/arch/x86_64/nacl_syscall_64.S
+
+obj/tramp_64.o: src/service_runtime/arch/x86_64/tramp_64.S
+	@gcc ${CCFLAGS} -o obj/tramp_64.o ${CCFLAGS0} ${CCFLAGS2} src/service_runtime/arch/x86_64/tramp_64.S

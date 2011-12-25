@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include "common/logger.h"
+#include "common/libnacl.h"
 struct zvm_state {
 	int debug_mode_bypass_acl_checks;
 	int debug_mode_ignore_validator;
@@ -69,6 +69,14 @@ int main(int argc, char **argv) {
 		snprintf(buf + pos, bufsize - pos, "\n");
 		log(INFO, buf);
 	}
+
+	signal_handlers_init();
+	if (!st.debug_mode_bypass_platform_qualification)
+	{
+		if(platform_qualify())
+			log(FATAL, "Platform qualification failed\n\n");
+	}
+
 	log(INFO, "ZeroVM finished.\n");
 	return 0;
 }
