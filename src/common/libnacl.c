@@ -20,14 +20,14 @@ void NaClSignalHandlerInit();
 int NaClRunSelQualificationTests();
 /* LIBNACL signatures list end */
 
-
-
-void log(int detail_level, char const  *fmt, ...) {
-	va_list ap;
-	va_start(ap, fmt);
-	NaClLog(detail_level, fmt, ap);
-	va_end(ap);
+void zvmlog(int detail_level, char const *fmt, ...)
+{
+  va_list ap;
+  va_start(ap, fmt);
+  NaClLog(detail_level, fmt, ap);
+  va_end(ap);
 }
+
 void log_set_file(char const *log_file) {
   NaClLogSetFile(log_file);
 }

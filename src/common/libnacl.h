@@ -13,8 +13,7 @@
 #define ERROR   (-3)
 #define FATAL   (-4)
 
-void log(int detail_level, char const  *fmt, ...)
-	__attribute__((format(printf, 2, 3)));
+#define LOG(lvl, ...) zvmlog(lvl, __VA_ARGS__)
 
 void log_set_file(char const *log_file);
 

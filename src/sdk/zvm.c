@@ -55,7 +55,7 @@ int32_t (*_trap)(uint64_t *in) = (int32_t (*)(uint64_t*))
  */
 int32_t zvm_setup(struct SetupList *hint)
 {
-  uint64_t request[] = {TrapUserSetup, 0, (uint32_t)hint};
+  uint64_t request[] = {TrapUserSetup, 0, (uint32_t)(uintptr_t)hint};
   return _trap(request);
 }
 
@@ -64,7 +64,7 @@ int32_t zvm_setup(struct SetupList *hint)
  */
 int32_t zvm_pread(int desc, char *buffer, int32_t size, int64_t offset)
 {
-  uint64_t request[] = {TrapRead, 0, desc, (uint32_t)buffer, size, offset};
+  uint64_t request[] = {TrapRead, 0, desc, (uint32_t)(uintptr_t)buffer, size, offset};
   return _trap(request);
 }
 
@@ -73,6 +73,6 @@ int32_t zvm_pread(int desc, char *buffer, int32_t size, int64_t offset)
  */
 int32_t zvm_pwrite(int desc, char *buffer, int32_t size, int64_t offset)
 {
-  uint64_t request[] = {TrapWrite, 0, desc, (uint32_t)buffer, size, offset};
+  uint64_t request[] = {TrapWrite, 0, desc, (uint32_t)(uintptr_t)buffer, size, offset};
   return _trap(request);
 }
